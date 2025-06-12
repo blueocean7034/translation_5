@@ -1,0 +1,762 @@
+/* Translation of assembly.txt starting at offset 0x01D6 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part4(void)
+{
+    /* [0x01D6] LDY $074E */
+    _Y = RdMem(0x074E);
+    X_ZN(_Y);
+
+    /* [0x01D9] LDA #$28 */
+    _A = 0x28;
+    X_ZN(_A);
+
+    /* [0x01DB] STA $00 */
+    WrMem(0x0000, _A);
+
+    /* [0x01DD] LDX #$0E */
+    _X = 0x0E;
+    X_ZN(_X);
+
+    /* [0x01DF] LDA $06E4,X */
+    _A = RdMem(0x06E4 + _X);
+    X_ZN(_A);
+
+    /* [0x01E2] CMP $00 */
+    {
+        uint8 value = RdMem(0x0000);
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x01E4] BCC $01F5 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x01F5;
+    }
+
+    /* [0x01E6] LDY $06E0 */
+    _Y = RdMem(0x06E0);
+    X_ZN(_Y);
+
+    /* [0x01E9] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x01EA] ADC $06E1,Y */
+    {
+        uint16 addr = 0x06E1 + _Y;
+        uint8 value = RdMem(addr);
+        uint32 t = _A + value + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        _P |= (t >> 8) & C_FLAG;
+        _P |= (~(_A ^ value) & (_A ^ t) & 0x80) ? V_FLAG : 0;
+        _A = (uint8)t;
+        X_ZN(_A);
+    }
+
+    /* [0x01ED] BCC $01F2 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x01F2;
+    }
+
+    /* [0x01EF] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x01F0] ADC $00 */
+    {
+        uint8 value = RdMem(0x0000);
+        uint32 t = _A + value + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        _P |= (t >> 8) & C_FLAG;
+        _P |= (~(_A ^ value) & (_A ^ t) & 0x80) ? V_FLAG : 0;
+        _A = (uint8)t;
+        X_ZN(_A);
+    }
+
+    /* [0x01F2] STA $06E4,X */
+    WrMem(0x06E4 + _X, _A);
+
+    /* [0x01F5] DEX */
+    _X--; X_ZN(_X);
+
+    /* [0x01F6] BPL $01DF */
+    if(!(_X & 0x80))
+    {
+        _PC = 0x01DF;
+    }
+
+    /* [0x01F8] LDX $06E0 */
+    _X = RdMem(0x06E0);
+    X_ZN(_X);
+
+    /* [0x01FB] INX */
+    _X++; X_ZN(_X);
+
+    /* [0x01FC] CPX #$03 */
+    {
+        uint8 value = 0x03;
+        uint32 t = _X - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x01FE] BNE $0202 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x0202;
+    }
+
+    /* [0x0200] LDX #$00 */
+    _X = 0x00;
+    X_ZN(_X);
+
+    /* [0x0202] STX $06E0 */
+    WrMem(0x06E0, _X);
+
+    /* [0x0205] LDX #$08 */
+    _X = 0x08;
+    X_ZN(_X);
+
+    /* [0x0207] LDY #$02 */
+    _Y = 0x02;
+    X_ZN(_Y);
+
+    /* [0x0209] LDA $06E9,Y */
+    _A = RdMem(0x06E9 + _Y);
+    X_ZN(_A);
+
+    /* [0x020C] STA $06F1,X */
+    WrMem(0x06F1 + _X, _A);
+
+    /* [0x020F] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0210] ADC #$08 */
+    {
+        uint8 value = 0x08;
+        uint32 t = _A + value + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        _P |= (t >> 8) & C_FLAG;
+        _P |= (~(_A ^ value) & (_A ^ t) & 0x80) ? V_FLAG : 0;
+        _A = (uint8)t;
+        X_ZN(_A);
+    }
+
+    /* [0x0212] STA $06F2,X */
+    WrMem(0x06F2 + _X, _A);
+
+    /* [0x0215] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0216] ADC #$08 */
+    {
+        uint8 value = 0x08;
+        uint32 t = _A + value + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        _P |= (t >> 8) & C_FLAG;
+        _P |= (~(_A ^ value) & (_A ^ t) & 0x80) ? V_FLAG : 0;
+        _A = (uint8)t;
+        X_ZN(_A);
+    }
+
+    /* [0x0218] STA $06F3,X */
+    WrMem(0x06F3 + _X, _A);
+
+    /* [0x021B] DEX */
+    _X--; X_ZN(_X);
+
+    /* [0x021C] DEX */
+    _X--; X_ZN(_X);
+
+    /* [0x021D] DEX */
+    _X--; X_ZN(_X);
+
+    /* [0x021E] DEY */
+    _Y--; X_ZN(_Y);
+
+    /* [0x021F] BPL $0209 */
+    if(!(_Y & 0x80))
+    {
+        _PC = 0x0209;
+    }
+
+    /* [0x0221] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+    }
+
+    /* [0x0222] LDA $0770 */
+    _A = RdMem(0x0770);
+    X_ZN(_A);
+
+    /* [0x0225] JSR $8E04 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8E04;
+    return;
+
+    /* [0x0228] AND ($82),Y */
+    {
+        uint16 addr = RdMem(0x0082) | (RdMem(0x0083) << 8);
+        _A &= RdMem(addr + _Y);
+        X_ZN(_A);
+    }
+
+    /* [0x022A] ??? */
+    /* Unknown opcode 0xDC */
+
+    /* [0x022B] LDX $838B */
+    _X = RdMem(0x838B);
+    X_ZN(_X);
+
+    /* [0x022E] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x022F] ??? */
+    /* Unknown opcode 0x92 */
+
+    /* [0x0230] LDY #$00 */
+    _Y = 0x00;
+    X_ZN(_Y);
+
+    /* [0x0232] BIT $04A0 */
+    {
+        uint8 value = RdMem(0x04A0);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x0235] LDA #$F8 */
+    _A = 0xF8;
+    X_ZN(_A);
+
+    /* [0x0237] STA $0200,Y */
+    WrMem(0x0200 + _Y, _A);
+
+    /* [0x023A] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x023B] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x023C] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x023D] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x023E] BNE $0237 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x0237;
+    }
+
+    /* [0x0240] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+    }
+
+    /* [0x0241] LDA $0772 */
+    _A = RdMem(0x0772);
+    X_ZN(_A);
+
+    /* [0x0244] JSR $8E04 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8E04;
+    return;
+
+    /* [0x0247] ??? */
+    /* Unknown opcode 0xCF */
+
+    /* [0x0248] ??? */
+    /* Unknown opcode 0x8F */
+
+    /* [0x0249] ??? */
+    /* Unknown opcode 0x67 */
+
+    /* [0x024A] STA $61 */
+    WrMem(0x0061, _A);
+
+    /* [0x024C] BCC $0293 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x0293;
+    }
+
+    /* [0x024E] ??? */
+    /* Unknown opcode 0x82 */
+
+    /* [0x024F] ??? */
+    /* Unknown opcode 0x04 */
+
+    /* [0x0250] JSR $0173 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x0173;
+    return;
+
+    /* [0x0253] BRK */
+    // Break - not translated
+
+    /* [0x0254] BRK */
+    // Break - not translated
+
+    /* [0x0255] LDY #$00 */
+    _Y = 0x00;
+    X_ZN(_Y);
+
+    /* [0x0257] LDA $06FC */
+    _A = RdMem(0x06FC);
+    X_ZN(_A);
+
+    /* [0x025A] ORA $06FD */
+    _A |= RdMem(0x06FD);
+    X_ZN(_A);
+
+    /* [0x025D] CMP #$10 */
+    {
+        uint8 value = 0x10;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x025F] BEQ $0265 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0265;
+    }
+
+    /* [0x0261] CMP #$90 */
+    {
+        uint8 value = 0x90;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0263] BNE $0268 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x0268;
+    }
+
+    /* [0x0265] JMP $82D8 */
+    _PC = 0x82D8;
+    return;
+
+    /* [0x0268] CMP #$20 */
+    {
+        uint8 value = 0x20;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x026A] BEQ $0286 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0286;
+    }
+
+    /* [0x026C] LDX $07A2 */
+    _X = RdMem(0x07A2);
+    X_ZN(_X);
+
+    /* [0x026F] BNE $027C */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x027C;
+    }
+
+    /* [0x0271] STA $0780 */
+    WrMem(0x0780, _A);
+
+    /* [0x0274] JSR $836B */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x836B;
+    return;
+
+    /* [0x0277] BCS $02D9 */
+    if(_P & C_FLAG)
+    {
+        _PC = 0x02D9;
+    }
+
+    /* [0x0279] JMP $82C0 */
+    _PC = 0x82C0;
+    return;
+
+    /* [0x027C] LDX $07FC */
+    _X = RdMem(0x07FC);
+    X_ZN(_X);
+
+    /* [0x027F] BEQ $02CB */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x02CB;
+    }
+
+    /* [0x0281] CMP #$40 */
+    {
+        uint8 value = 0x40;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0283] BNE $02CB */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x02CB;
+    }
+
+    /* [0x0285] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x0286] LDA $07A2 */
+    _A = RdMem(0x07A2);
+    X_ZN(_A);
+
+    /* [0x0289] BEQ $02D9 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x02D9;
+    }
+
+    /* [0x028B] LDA #$18 */
+    _A = 0x18;
+    X_ZN(_A);
+
+    /* [0x028D] STA $07A2 */
+    WrMem(0x07A2, _A);
+
+    /* [0x0290] LDA $0780 */
+    _A = RdMem(0x0780);
+    X_ZN(_A);
+
+    /* [0x0293] BNE $02CB */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x02CB;
+    }
+
+    /* [0x0295] LDA #$10 */
+    _A = 0x10;
+    X_ZN(_A);
+
+    /* [0x0297] STA $0780 */
+    WrMem(0x0780, _A);
+
+    /* [0x029A] CPY #$01 */
+    {
+        uint8 value = 0x01;
+        uint32 t = _Y - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x029C] BEQ $02AC */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x02AC;
+    }
+
+    /* [0x029E] LDA $077A */
+    _A = RdMem(0x077A);
+    X_ZN(_A);
+
+    /* [0x02A1] EOR #$01 */
+    _A ^= 0x01;
+    X_ZN(_A);
+
+    /* [0x02A3] STA $077A */
+    WrMem(0x077A, _A);
+
+    /* [0x02A6] JSR $8325 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8325;
+    return;
+
+    /* [0x02A9] JMP $82BB */
+    _PC = 0x82BB;
+    return;
+
+    /* [0x02AC] LDX $076B */
+    _X = RdMem(0x076B);
+    X_ZN(_X);
+
+    /* [0x02AF] INX */
+    _X++; X_ZN(_X);
+
+    /* [0x02B0] TXA */
+    _A = _X; X_ZN(_A);
+
+    /* [0x02B1] AND #$07 */
+    _A &= 0x07;
+    X_ZN(_A);
+
+    /* [0x02B3] STA $076B */
+    WrMem(0x076B, _A);
+
+    /* [0x02B6] JSR $830E */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x830E;
+    return;
+
+    /* [0x02B9] LDA $823F,X */
+    _A = RdMem(0x823F + _X);
+    X_ZN(_A);
+
+    /* [0x02BC] STA $0300,X */
+    WrMem(0x0300 + _X, _A);
+
+    /* [0x02BF] INX */
+    _X++; X_ZN(_X);
+
+    /* [0x02C0] CPX #$06 */
+    {
+        uint8 value = 0x06;
+        uint32 t = _X - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x02C2] BMI $02B9 */
+    if(_X & 0x80)
+    {
+        _PC = 0x02B9;
+    }
+
+    /* [0x02C4] LDY $075F */
+    _Y = RdMem(0x075F);
+    X_ZN(_Y);
+
+    /* [0x02C7] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x02C8] STY $0304 */
+    WrMem(0x0304, _Y);
+
+    /* [0x02CB] LDA #$00 */
+    _A = 0x00;
+    X_ZN(_A);
+
+    /* [0x02CD] STA $06FC */
+    WrMem(0x06FC, _A);
+
+    /* [0x02D0] JSR $AEEA */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0xAEEA;
+    return;
+
+    /* [0x02D3] LDA $0E */
+    _A = RdMem(0x000E);
+    X_ZN(_A);
+
+    /* [0x02D5] CMP #$06 */
+    {
+        uint8 value = 0x06;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x02D7] BNE $031D */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x031D;
+    }
+
+    /* [0x02D9] LDA #$00 */
+    _A = 0x00;
+    X_ZN(_A);
+
+    /* [0x02DB] STA $0770 */
+    WrMem(0x0770, _A);
+
+    /* [0x02DE] STA $0772 */
+    WrMem(0x0772, _A);
+
+    /* [0x02E1] STA $0722 */
+    WrMem(0x0722, _A);
+
+    /* [0x02E4] INC $0774 */
+    {
+        uint8 value = RdMem(0x0774);
+        value++;
+        WrMem(0x0774, value);
+        X_ZN(value);
+    }
+
+    /* [0x02E7] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+    }
+
+    /* [0x02E8] LDY $07A2 */
+    _Y = RdMem(0x07A2);
+    X_ZN(_Y);
+
+    /* [0x02EB] BEQ $02D9 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x02D9;
+    }
+
+    /* [0x02ED] ASL */
+    {
+        uint8 carry = (_A >> 7) & 1;
+        _A <<= 1;
+        _P &= ~(Z_FLAG | N_FLAG | C_FLAG);
+        if(carry) _P |= C_FLAG;
+        X_ZN(_A);
+    }
+
+    /* [0x02EE] BCC $02F6 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x02F6;
+    }
+
+    /* [0x02F0] LDA $07FD */
+    _A = RdMem(0x07FD);
+    X_ZN(_A);
+
+    /* [0x02F3] JSR $830E */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x830E;
+    return;
+
+    /* [0x02F6] JSR $9C03 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x9C03;
+    return;
+
+    /* [0x02F9] INC $075D */
+    {
+        uint8 value = RdMem(0x075D);
+        value++;
+        WrMem(0x075D, value);
+        X_ZN(value);
+    }
+
+    /* [0x02FC] INC $0764 */
+    {
+        uint8 value = RdMem(0x0764);
+        value++;
+        WrMem(0x0764, value);
+        X_ZN(value);
+    }
+
+    /* [0x02FF] INC $0757 */
+    {
+        uint8 value = RdMem(0x0757);
+        value++;
+        WrMem(0x0757, value);
+        X_ZN(value);
+    }
+
+    /* [0x0302] INC $0770 */
+    {
+        uint8 value = RdMem(0x0770);
+        value++;
+        WrMem(0x0770, value);
+        X_ZN(value);
+    }
+
+    /* [0x0305] LDA $07FC */
+    _A = RdMem(0x07FC);
+    X_ZN(_A);
+
+    /* [0x0308] STA $076A */
+    WrMem(0x076A, _A);
+
+    /* [0x030B] LDA #$00 */
+    _A = 0x00;
+    X_ZN(_A);
+
+    /* [0x030D] STA $0772 */
+    WrMem(0x0772, _A);
+
+    /* [0x0310] STA $07A2 */
+    WrMem(0x07A2, _A);
+
+    /* [0x0313] LDX #$17 */
+    _X = 0x17;
+    X_ZN(_X);
+
+    /* [0x0315] LDA #$00 */
+    _A = 0x00;
+    X_ZN(_A);
+
+    /* [0x0317] STA $07DD,X */
+    WrMem(0x07DD + _X, _A);
+
+    /* [0x031A] DEX */
+    _X--; X_ZN(_X);
+
+    /* [0x031B] BPL $0317 */
+    if(!(_X & 0x80))
+    {
+        _PC = 0x0317;
+    }
+
+    /* [0x031D] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+    }
+
+    /* [0x031E] STA $075F */
+    WrMem(0x075F, _A);
+
+    /* [0x0321] STA $0766 */
+    WrMem(0x0766, _A);
+
+    /* [0x0324] LDX #$00 */
+    _X = 0x00;
+    X_ZN(_X);
+
+    /* [0x0326] STX $0760 */
+    WrMem(0x0760, _X);
+
+    /* [0x0329] STX $0767 */
+    WrMem(0x0767, _X);
+
+    /* [0x032C] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+    }
+}

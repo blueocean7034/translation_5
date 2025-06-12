@@ -1,0 +1,1 @@
+Use the provided emulator's source code to take the file "assembly.txt" and translate it's contents into C code. Do not edit or modify "assembly.txt" in any way. Be as accurate as possible with your translations. I understand that this is challenging. That is why I will be making another pass over the translation once all of the assembly has been translated for the first time.

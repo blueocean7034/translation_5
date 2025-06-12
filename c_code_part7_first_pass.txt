@@ -1,0 +1,321 @@
+/* Translation of assembly.txt starting at offset 0x0662 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part7(void)
+{
+    /* [0x0662] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0664] JSR $8808 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8808;
+
+    /* [0x0667] JMP $8745 */
+    _PC = 0x8745;
+    return;
+
+    /* [0x066A] JSR $BC30 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0xBC30;
+
+    /* [0x066D] LDX $0300 */
+    _X = RdMem(0x0300); X_ZN(_X);
+
+    /* [0x0670] LDA #$20 */
+    _A = 0x20; X_ZN(_A);
+
+    /* [0x0672] STA $0301,X */
+    WrMem(0x0301 + _X, _A);
+
+    /* [0x0675] LDA #$73 */
+    _A = 0x73; X_ZN(_A);
+
+    /* [0x0677] STA $0302,X */
+    WrMem(0x0302 + _X, _A);
+
+    /* [0x067A] LDA #$03 */
+    _A = 0x03; X_ZN(_A);
+
+    /* [0x067C] STA $0303,X */
+    WrMem(0x0303 + _X, _A);
+
+    /* [0x067F] LDY $075F */
+    _Y = RdMem(0x075F); X_ZN(_Y);
+
+    /* [0x0682] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x0683] TYA */
+    _A = _Y; X_ZN(_A);
+
+    /* [0x0684] STA $0304,X */
+    WrMem(0x0304 + _X, _A);
+
+    /* [0x0687] LDA #$28 */
+    _A = 0x28; X_ZN(_A);
+
+    /* [0x0689] STA $0305,X */
+    WrMem(0x0305 + _X, _A);
+
+    /* [0x068C] LDY $075C */
+    _Y = RdMem(0x075C); X_ZN(_Y);
+
+    /* [0x068F] INY */
+    _Y++; X_ZN(_Y);
+
+    /* [0x0690] TYA */
+    _A = _Y; X_ZN(_A);
+
+    /* [0x0691] STA $0306,X */
+    WrMem(0x0306 + _X, _A);
+
+    /* [0x0694] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0696] STA $0307,X */
+    WrMem(0x0307 + _X, _A);
+
+    /* [0x0699] TXA */
+    _A = _X; X_ZN(_A);
+
+    /* [0x069A] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x069B] ADC #$06 */
+    {
+        uint16 t = _A + 0x06 + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        if(t & 0x100) _P |= C_FLAG;
+        if(~(_A ^ 0x06) & (_A ^ t) & 0x80) _P |= V_FLAG;
+        _A = t & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x069D] STA $0300 */
+    WrMem(0x0300, _A);
+
+    /* [0x06A0] JMP $8745 */
+    _PC = 0x8745;
+    return;
+
+    /* [0x06A3] LDA $0759 */
+    _A = RdMem(0x0759); X_ZN(_A);
+
+    /* [0x06A6] BEQ $06B2 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x06B2;
+    }
+
+    /* [0x06A8] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x06AA] STA $0759 */
+    WrMem(0x0759, _A);
+
+    /* [0x06AD] LDA #$02 */
+    _A = 0x02; X_ZN(_A);
+
+    /* [0x06AF] JMP $86C7 */
+    _PC = 0x86C7;
+    return;
+
+    /* [0x06B2] INC $073C */
+    {
+        uint8 value = RdMem(0x073C);
+        value = (value + 1) & 0xFF;
+        WrMem(0x073C, value);
+        X_ZN(value);
+    }
+
+    /* [0x06B5] JMP $8745 */
+    _PC = 0x8745;
+    return;
+
+    /* [0x06B8] LDA $0770 */
+    _A = RdMem(0x0770); X_ZN(_A);
+
+    /* [0x06BB] BEQ $06F0 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x06F0;
+    }
+
+    /* [0x06BD] CMP #$03 */
+    {
+        uint8 value = 0x03;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x06BF] BEQ $06E3 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x06E3;
+    }
+
+    /* [0x06C1] LDA $0752 */
+    _A = RdMem(0x0752); X_ZN(_A);
+
+    /* [0x06C4] BNE $06F0 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x06F0;
+    }
+
+    /* [0x06C6] LDY $074E */
+    _Y = RdMem(0x074E); X_ZN(_Y);
+
+    /* [0x06C9] CPY #$03 */
+    {
+        uint8 value = 0x03;
+        uint32 t = _Y - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x06CB] BEQ $06D2 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x06D2;
+    }
+
+    /* [0x06CD] LDA $0769 */
+    _A = RdMem(0x0769); X_ZN(_A);
+
+    /* [0x06D0] BNE $06F0 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x06F0;
+    }
+
+    /* [0x06D2] JSR $EFA4 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0xEFA4;
+
+    /* [0x06D5] LDA #$01 */
+    _A = 0x01; X_ZN(_A);
+
+    /* [0x06D7] JSR $8808 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8808;
+
+    /* [0x06DA] JSR $88A5 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x88A5;
+
+    /* [0x06DD] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x06DF] STA $0774 */
+    WrMem(0x0774, _A);
+
+    /* [0x06E2] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+    /* [0x06E3] LDA #$12 */
+    _A = 0x12; X_ZN(_A);
+
+    /* [0x06E5] STA $07A0 */
+    WrMem(0x07A0, _A);
+
+    /* [0x06E8] LDA #$03 */
+    _A = 0x03; X_ZN(_A);
+
+    /* [0x06EA] JSR $8808 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8808;
+
+    /* [0x06ED] JMP $874E */
+    _PC = 0x874E;
+    return;
+
+    /* [0x06F0] LDA #$08 */
+    _A = 0x08; X_ZN(_A);
+
+    /* [0x06F2] STA $073C */
+    WrMem(0x073C, _A);
+
+    /* [0x06F5] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+    /* [0x06F6] INC $0774 */
+    {
+        uint8 value = RdMem(0x0774);
+        value = (value + 1) & 0xFF;
+        WrMem(0x0774, value);
+        X_ZN(value);
+    }
+
+    /* [0x06F9] JSR $92B0 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x92B0;
+
+    /* [0x06FC] LDA $071F */
+    _A = RdMem(0x071F); X_ZN(_A);
+
+    /* [0x06FF] BNE $06F9 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x06F9;
+    }
+
+    /* [0x0701] DEC $071E */
+    {
+        uint8 value = RdMem(0x071E);
+        value = (value - 1) & 0xFF;
+        WrMem(0x071E, value);
+        X_ZN(value);
+    }
+
+    /* [0x0704] BPL $0709 */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x0709;
+    }
+
+    /* [0x0706] INC $073C */
+    {
+        uint8 value = RdMem(0x073C);
+        value = (value + 1) & 0xFF;
+        WrMem(0x073C, value);
+        X_ZN(value);
+    }
+
+    /* [0x0709] LDA #$06 */
+    _A = 0x06; X_ZN(_A);
+
+    /* [0x070B] STA $0773 */
+    WrMem(0x0773, _A);
+
+    /* [0x070E] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+}

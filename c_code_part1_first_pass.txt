@@ -1,0 +1,198 @@
+/* Translation of assembly.txt starting at offset 0x0010 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part1(void)
+{
+    /* [0x0010] SEI */
+    _P |= I_FLAG;
+
+    /* [0x0011] LDA #$11 */
+    _A = 0x11;
+    X_ZN(_A);
+
+    /* [0x0013] STA $8002 */
+    WrMem(0x8002, _A);
+
+    /* [0x0016] JMP $8000 */
+    _PC = 0x8000;
+    /* Execution would continue at address 0x8000 */
+
+    /* [0x0019] TXS */
+    _S = _X;
+
+    /* [0x001A] LDA $2002 */
+    _A = RdMem(0x2002);
+    X_ZN(_A);
+
+    /* [0x001D] BPL $001A */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x001A;
+        /* branch back to address 0x001A */
+    }
+
+    /* [0x001F] LDA $2002 */
+    _A = RdMem(0x2002);
+    X_ZN(_A);
+
+    /* [0x0022] BPL $001F */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x001F;
+    }
+
+    /* [0x0024] LDY #$FE */
+    _Y = 0xFE;
+    X_ZN(_Y);
+
+    /* [0x0026] LDX #$05 */
+    _X = 0x05;
+    X_ZN(_X);
+
+    /* [0x0028] LDA $07D7,X */
+    {
+        uint16 addr = 0x07D7 + _X;
+        _A = RdMem(addr);
+        X_ZN(_A);
+    }
+
+    /* [0x002B] CMP #$0A */
+    {
+        uint8 value = 0x0A;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x002D] BCS $003B */
+    if(_P & C_FLAG)
+    {
+        _PC = 0x003B;
+    }
+
+    /* [0x002F] DEX */
+    _X--;
+    X_ZN(_X);
+
+    /* [0x0030] BPL $0028 */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x0028;
+    }
+
+    /* [0x0032] LDA $07FF */
+    _A = RdMem(0x07FF);
+    X_ZN(_A);
+
+    /* [0x0035] CMP #$A5 */
+    {
+        uint8 value = 0xA5;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0037] BNE $003B */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x003B;
+    }
+
+    /* [0x0039] LDY #$D6 */
+    _Y = 0xD6;
+    X_ZN(_Y);
+
+    /* [0x003B] JSR $90CC */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x90CC;
+
+    /* [0x003E] STA $4011 */
+    WrMem(0x4011, _A);
+
+    /* [0x0041] STA $0770 */
+    WrMem(0x0770, _A);
+
+    /* [0x0044] LDA #$A5 */
+    _A = 0xA5;
+    X_ZN(_A);
+
+    /* [0x0046] STA $07FF */
+    WrMem(0x07FF, _A);
+
+    /* [0x0049] STA $07A7 */
+    WrMem(0x07A7, _A);
+
+    /* [0x004C] LDA #$0F */
+    _A = 0x0F;
+    X_ZN(_A);
+
+    /* [0x004E] STA $4015 */
+    WrMem(0x4015, _A);
+
+    /* [0x0051] LDA #$06 */
+    _A = 0x06;
+    X_ZN(_A);
+
+    /* [0x0053] STA $2001 */
+    WrMem(0x2001, _A);
+
+    /* [0x0056] JSR $8220 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8220;
+
+    /* [0x0059] JSR $8E19 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8E19;
+
+    /* [0x005C] INC $0774 */
+    {
+        uint8 value = RdMem(0x0774);
+        value++;
+        X_ZN(value);
+        WrMem(0x0774, value);
+    }
+
+    /* [0x005F] LDA $0778 */
+    _A = RdMem(0x0778);
+    X_ZN(_A);
+
+    /* [0x0062] ORA #$80 */
+    _A |= 0x80;
+    X_ZN(_A);
+
+    /* [0x0064] JSR $8EED */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8EED;
+
+    /* [0x0067] JMP $8057 */
+    _PC = 0x8057;
+
+    /* [0x006A] ORA ($A4,X) */
+    {
+        uint16 addr = RdMem((0xA4 + _X) & 0xFF) | (RdMem((0xA4 + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x006C] INY */
+    _Y++;
+    X_ZN(_Y);
+
+    /* [0x006D] CPX $0010 */
+    {
+        uint8 value = RdMem(0x0010);
+        uint32 t = _X - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+}

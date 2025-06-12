@@ -1,0 +1,893 @@
+/* Translation of assembly.txt starting at offset 0x0762 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part9(void)
+{
+    /* [0x0762] JSR $0543 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x0543;
+
+    /* [0x0765] ASL $0A,X */
+    {
+        uint16 addr = (uint8)(0x0A + _X);
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0767] ??? */
+    /* Unknown opcode 0x1B - no translation */
+
+    /* [0x0768] ??? */
+    /* Unknown opcode 0x12 - no translation */
+
+    /* [0x0769] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x076A] JSR $0B52 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x0B52;
+
+    /* [0x076D] JSR $1B18 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x1B18;
+
+    /* [0x0770] ORA $0D,X */
+    {
+        uint16 addr = (uint8)(0x0D + _X);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x0772] BIT $24 */
+    {
+        uint8 value = RdMem(0x0024);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x0774] ORA $1612,X */
+    {
+        uint16 addr = 0x1612 + _X;
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x0777] ASL $6820 */
+    {
+        uint16 addr = 0x6820;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x077A] ORA $00 */
+    {
+        uint8 value = RdMem(0x0000);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x077C] BIT $24 */
+    {
+        uint8 value = RdMem(0x0024);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x077E] ROL $2329 */
+    {
+        uint16 addr = 0x2329;
+        uint8 value = RdMem(addr);
+        uint8 carry = (value >> 7) & 1;
+        value = ((value << 1) | (_P & C_FLAG ? 1 : 0)) & 0xFF;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0781] CPY #$7F */
+    {
+        uint8 value = 0x7F;
+        uint32 t = _Y - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0783] TAX */
+    _X = _A; X_ZN(_X);
+
+    /* [0x0784] ??? */
+    /* Unknown opcode 0x23 - no translation */
+
+    /* [0x0785] ??? */
+    /* Unknown opcode 0xC2 - no translation */
+
+    /* [0x0786] ORA ($EA,X) */
+    {
+        uint16 addr = RdMem((0xEA + _X) & 0xFF) | (RdMem((0xEA + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x0788] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x0789] AND ($CD,X) */
+    {
+        uint16 addr = RdMem((0xCD + _X) & 0xFF) | (RdMem((0xCD + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        _A &= value;
+        X_ZN(_A);
+    }
+
+    /* [0x078B] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x078C] BIT $24 */
+    {
+        uint8 value = RdMem(0x0024);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x078E] AND #$24 */
+    _A &= 0x24; X_ZN(_A);
+
+    /* [0x0790] BIT $24 */
+    {
+        uint8 value = RdMem(0x0024);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x0792] BIT $21 */
+    {
+        uint8 value = RdMem(0x0021);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x0794] ??? */
+    /* Unknown opcode 0x4B - no translation */
+
+    /* [0x0795] ORA #$20 */
+    _A |= 0x20; X_ZN(_A);
+
+    /* [0x0797] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0798] ??? */
+    /* Unknown opcode 0x1B - no translation */
+
+    /* [0x0799] ORA $0D,X */
+    {
+        uint16 addr = (uint8)(0x0D + _X);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x079B] BIT $24 */
+    {
+        uint8 value = RdMem(0x0024);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x079D] PLP */
+    _P = POP();
+
+    /* [0x079E] BIT $22 */
+    {
+        uint8 value = RdMem(0x0022);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x07A0] ??? */
+    /* Unknown opcode 0x0C - no translation */
+
+    /* [0x07A1] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x07A2] BIT $23 */
+    {
+        uint8 value = RdMem(0x0023);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x07A4] ??? */
+    /* Unknown opcode 0xDC - no translation */
+
+    /* [0x07A5] ORA ($BA,X) */
+    {
+        uint16 addr = RdMem((0xBA + _X) & 0xFF) | (RdMem((0xBA + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07A7] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x07A8] AND ($CD,X) */
+    {
+        uint16 addr = RdMem((0xCD + _X) & 0xFF) | (RdMem((0xCD + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        _A &= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07AA] ORA $16 */
+    {
+        uint8 value = RdMem(0x0016);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07AC] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x07AD] ??? */
+    /* Unknown opcode 0x1B - no translation */
+
+    /* [0x07AE] ??? */
+    /* Unknown opcode 0x12 - no translation */
+
+    /* [0x07AF] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x07B0] ??? */
+    /* Unknown opcode 0x22 - no translation */
+
+    /* [0x07B1] ??? */
+    /* Unknown opcode 0x0C - no translation */
+
+    /* [0x07B2] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x07B3] ORA $1612,X */
+    {
+        uint16 addr = 0x1612 + _X;
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07B6] ASL $1E24 */
+    {
+        uint16 addr = 0x1E24;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07B9] ORA $21FF,Y */
+    {
+        uint16 addr = 0x21FF + _Y;
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07BC] CMP $1605 */
+    {
+        uint8 value = RdMem(0x1605);
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x07BF] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x07C0] ??? */
+    /* Unknown opcode 0x1B - no translation */
+
+    /* [0x07C1] ??? */
+    /* Unknown opcode 0x12 - no translation */
+
+    /* [0x07C2] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x07C3] ??? */
+    /* Unknown opcode 0x22 - no translation */
+
+    /* [0x07C4] ??? */
+    /* Unknown opcode 0x0B - no translation */
+
+    /* [0x07C5] ORA #$10 */
+    _A |= 0x10; X_ZN(_A);
+
+    /* [0x07C7] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x07C8] ASL $0E,X */
+    {
+        uint16 addr = (uint8)(0x0E + _X);
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07CA] BIT $18 */
+    {
+        uint8 value = RdMem(0x0018);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x07CC] ??? */
+    /* Unknown opcode 0x1F - no translation */
+
+    /* [0x07CD] ASL $FF1B */
+    {
+        uint16 addr = 0xFF1B;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07D0] AND $84 */
+    {
+        uint8 value = RdMem(0x0084);
+        _A &= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07D2] ORA $20,X */
+    {
+        uint16 addr = (uint8)(0x20 + _X);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07D4] ASL $0C15 */
+    {
+        uint16 addr = 0x0C15;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07D7] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x07D8] ASL $0E,X */
+    {
+        uint16 addr = (uint8)(0x0E + _X);
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07DA] BIT $1D */
+    {
+        uint8 value = RdMem(0x001D);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x07DC] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x07DD] BIT $20 */
+    {
+        uint8 value = RdMem(0x0020);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x07DF] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x07E0] ??? */
+    /* Unknown opcode 0x1B - no translation */
+
+    /* [0x07E1] ORA $2324,Y */
+    {
+        uint16 addr = 0x2324 + _Y;
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07E4] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x07E5] ??? */
+    /* Unknown opcode 0x17 - no translation */
+
+    /* [0x07E6] ASL $262B */
+    {
+        uint16 addr = 0x262B;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07E9] AND $01 */
+    {
+        uint8 value = RdMem(0x0001);
+        _A &= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07EB] BIT $26 */
+    {
+        uint8 value = RdMem(0x0026);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x07ED] AND $2401 */
+    {
+        uint8 value = RdMem(0x2401);
+        _A &= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07F0] ROL $35 */
+    {
+        uint16 addr = 0x0035;
+        uint8 value = RdMem(addr);
+        uint8 carry = (value >> 7) & 1;
+        value = ((value << 1) | (_P & C_FLAG ? 1 : 0)) & 0xFF;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x07F2] ORA ($24,X) */
+    {
+        uint16 addr = RdMem((0x24 + _X) & 0xFF) | (RdMem((0x24 + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07F4] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x07F5] CMP $AA46,Y */
+    {
+        uint16 addr = 0xAA46 + _Y;
+        uint8 value = RdMem(addr);
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x07F8] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x07F9] SBC ($45,X) */
+    {
+        uint16 addr = RdMem((0x45 + _X) & 0xFF) | (RdMem((0x45 + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        uint16 tmp = _A - value - ((_P & C_FLAG) ^ C_FLAG);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+        if(tmp < 0x100) _P |= C_FLAG;
+        _P |= (((_A ^ value) & (_A ^ tmp) & 0x80) != 0) << 6; /* V_FLAG */
+        _A = tmp & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x07FB] TAX */
+    _X = _A; X_ZN(_X);
+
+    /* [0x07FC] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x07FD] ORA $1E,X */
+    {
+        uint16 addr = (uint8)(0x1E + _X);
+        uint8 value = RdMem(addr);
+        _A |= value;
+        X_ZN(_A);
+    }
+
+    /* [0x07FF] ??? */
+    /* Unknown opcode 0x12 - no translation */
+
+    /* [0x0800] BPL $0814 */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x0814;
+        return;
+    }
+
+    /* [0x0802] ??? */
+    /* Unknown opcode 0x04 - no translation */
+
+    /* [0x0803] ??? */
+    /* Unknown opcode 0x03 - no translation */
+
+    /* [0x0804] ??? */
+    /* Unknown opcode 0x02 - no translation */
+
+    /* [0x0805] BRK */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    PUSH((_P | B_FLAG) & 0xFF);
+    _P |= I_FLAG;
+    _PC = RdMem(0xFFFE) | (RdMem(0xFFFF) << 8);
+    return;
+
+    /* [0x0806] BIT $05 */
+    {
+        uint8 value = RdMem(0x0005);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x0808] BIT $00 */
+    {
+        uint8 value = RdMem(0x0000);
+        uint8 result = _A & value;
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG);
+        if(result == 0) _P |= Z_FLAG;
+        _P |= value & (N_FLAG | V_FLAG);
+    }
+
+    /* [0x080A] PHP */
+    PUSH(_P | B_FLAG);
+
+    /* [0x080B] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x080C] ASL $00 */
+    {
+        uint16 addr = 0x0000;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= (value >> 7) & C_FLAG;
+        value = (value << 1) & 0xFF;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x080E] BRK */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    PUSH((_P | B_FLAG) & 0xFF);
+    _P |= I_FLAG;
+    _PC = RdMem(0xFFFE) | (RdMem(0xFFFF) << 8);
+    return;
+
+    /* [0x080F] BRK */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    PUSH((_P | B_FLAG) & 0xFF);
+    _P |= I_FLAG;
+    _PC = RdMem(0xFFFE) | (RdMem(0xFFFF) << 8);
+    return;
+
+    /* [0x0810] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x0811] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x0812] LSR $4E */
+    {
+        uint16 addr = 0x004E;
+        uint8 value = RdMem(addr);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        _P |= value & C_FLAG;
+        value >>= 1;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0814] EOR $6E61,Y */
+    {
+        uint16 addr = 0x6E61 + _Y;
+        uint8 value = RdMem(addr);
+        _A ^= value;
+        X_ZN(_A);
+    }
+
+    /* [0x0817] ROR $0A48 */
+    {
+        uint16 addr = 0x0A48;
+        uint8 value = RdMem(addr);
+        uint8 carry = value & 1;
+        value = (value >> 1) | ((_P & C_FLAG) ? 0x80 : 0);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x081A] TAY */
+    _Y = _A; X_ZN(_Y);
+
+    /* [0x081B] CPY #$04 */
+    {
+        uint8 value = 0x04;
+        uint32 t = _Y - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x081D] BCC $082B */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x082B;
+        return;
+    }
+
+    /* [0x081F] CPY #$08 */
+    {
+        uint8 value = 0x08;
+        uint32 t = _Y - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0821] BCC $0825 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x0825;
+        return;
+    }
+
+    /* [0x0823] LDY #$08 */
+    _Y = 0x08; X_ZN(_Y);
+
+    /* [0x0825] LDA $077A */
+    _A = RdMem(0x077A); X_ZN(_A);
+
+    /* [0x0828] BNE $082B */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x082B;
+        return;
+    }
+
+    /* [0x082A] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x082B] LDX $87FE,Y */
+    {
+        uint16 addr = 0x87FE + _Y;
+        _X = RdMem(addr); X_ZN(_X);
+    }
+
+    /* [0x082E] LDY #$00 */
+    _Y = 0x00; X_ZN(_Y);
+
+    /* [0x0830] LDA $8752,X */
+    {
+        uint16 addr = 0x8752 + _X;
+        _A = RdMem(addr); X_ZN(_A);
+    }
+
+    /* [0x0833] CMP #$FF */
+    {
+        uint8 value = 0xFF;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0835] BEQ $083E */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x083E;
+        return;
+    }
+
+    /* [0x0837] STA $0301,Y */
+    WrMem(0x0301 + _Y, _A);
+
+    /* [0x083A] INX */
+    _X = (_X + 1) & 0xFF; X_ZN(_X);
+
+    /* [0x083B] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x083C] BNE $0830 */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x0830;
+        return;
+    }
+
+    /* [0x083E] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0840] STA $0301,Y */
+    WrMem(0x0301 + _Y, _A);
+
+    /* [0x0843] PLA */
+    _A = POP(); X_ZN(_A);
+
+    /* [0x0844] TAX */
+    _X = _A; X_ZN(_X);
+
+    /* [0x0845] CMP #$04 */
+    {
+        uint8 value = 0x04;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0847] BCS $0892 */
+    if(_P & C_FLAG)
+    {
+        _PC = 0x0892;
+        return;
+    }
+
+    /* [0x0849] DEX */
+    _X = (_X - 1) & 0xFF; X_ZN(_X);
+
+    /* [0x084A] BNE $086F */
+    if(!(_P & Z_FLAG))
+    {
+        _PC = 0x086F;
+        return;
+    }
+
+    /* [0x084C] LDA $075A */
+    _A = RdMem(0x075A); X_ZN(_A);
+
+    /* [0x084F] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0850] ADC #$01 */
+    {
+        uint16 tmp = _A + 0x01 + (_P & C_FLAG);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+        if(tmp > 0xFF) _P |= C_FLAG;
+        _P |= (((_A ^ tmp) & (0x01 ^ tmp) & 0x80) != 0) << 6;
+        _A = tmp & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0852] CMP #$0A */
+    {
+        uint8 value = 0x0A;
+        uint32 t = _A - value;
+        X_ZN(t & 0xFF);
+        _P &= ~C_FLAG;
+        _P |= ((t >> 8) & C_FLAG) ^ C_FLAG;
+    }
+
+    /* [0x0854] BCC $085D */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x085D;
+        return;
+    }
+
+    /* [0x0856] SBC #$0A */
+    {
+        uint16 tmp = _A - 0x0A - ((_P & C_FLAG) ^ C_FLAG);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+        if(tmp < 0x100) _P |= C_FLAG;
+        _P |= (((_A ^ 0x0A) & (_A ^ tmp) & 0x80) != 0) << 6;
+        _A = tmp & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0858] LDY #$9F */
+    _Y = 0x9F; X_ZN(_Y);
+
+    /* [0x085A] STY $0308 */
+    WrMem(0x0308, _Y);
+
+    /* [0x085D] STA $0309 */
+    WrMem(0x0309, _A);
+
+    /* [0x0860] LDY $075F */
+    _Y = RdMem(0x075F); X_ZN(_Y);
+
+    /* [0x0863] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0864] STY $0314 */
+    WrMem(0x0314, _Y);
+
+    /* [0x0867] LDY $075C */
+    _Y = RdMem(0x075C); X_ZN(_Y);
+
+    /* [0x086A] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x086B] STY $0316 */
+    WrMem(0x0316, _Y);
+
+    /* [0x086E] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+}

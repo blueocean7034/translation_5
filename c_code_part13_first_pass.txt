@@ -1,0 +1,264 @@
+/* Translation of assembly.txt starting at offset 0x0B61 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part13(void)
+{
+    /* [0x0B61] ??? */
+    /* Unknown opcode 0x64 - no translation */
+
+    /* [0x0B62] ADC ($65,X) */
+    {
+        uint16 addr = RdMem((0x65 + _X) & 0xFF) | (RdMem((0x65 + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        uint16 t = _A + value + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        if(t & 0x100) _P |= C_FLAG;
+        if(~(_A ^ value) & (_A ^ t) & 0x80) _P |= V_FLAG;
+        _A = t & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0B64] ??? */
+    /* Unknown opcode 0x62 - no translation */
+
+    /* [0x0B65] ROR $63 */
+    {
+        uint16 addr = 0x0063;
+        uint8 value = RdMem(addr);
+        uint8 carry = value & 0x01;
+        value >>= 1;
+        value |= (_P & C_FLAG) << 7;
+        _P &= ~(Z_FLAG | N_FLAG | C_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0B67] ??? */
+    /* Unknown opcode 0x67 - no translation */
+
+    /* [0x0B68] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+    /* [0x0B69] ??? */
+    /* Unknown opcode 0x64 - no translation */
+
+    /* [0x0B6A] ADC ($65,X) */
+    {
+        uint16 addr = RdMem((0x65 + _X) & 0xFF) | (RdMem((0x65 + _X + 1) & 0xFF) << 8);
+        uint8 value = RdMem(addr);
+        uint16 t = _A + value + (_P & C_FLAG);
+        _P &= ~(Z_FLAG | N_FLAG | V_FLAG | C_FLAG);
+        if(t & 0x100) _P |= C_FLAG;
+        if(~(_A ^ value) & (_A ^ t) & 0x80) _P |= V_FLAG;
+        _A = t & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0B6C] ??? */
+    /* Unknown opcode 0x62 - no translation */
+
+    /* [0x0B6D] ROR $63 */
+    {
+        uint16 addr = 0x0063;
+        uint8 value = RdMem(addr);
+        uint8 carry = value & 0x01;
+        value >>= 1;
+        value |= (_P & C_FLAG) << 7;
+        _P &= ~(Z_FLAG | N_FLAG | C_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0B6F] ??? */
+    /* Unknown opcode 0x67 - no translation */
+
+    /* [0x0B70] PLA */
+    _A = POP();
+    X_ZN(_A);
+
+    /* [0x0B71] PLA */
+    _A = POP();
+    X_ZN(_A);
+
+    /* [0x0B72] ADC #$69 */
+    {
+        uint16 tmp = _A + 0x69 + (_P & C_FLAG);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+        if(tmp & 0x100) _P |= C_FLAG;
+        if(~(_A ^ 0x69) & (_A ^ tmp) & 0x80) _P |= V_FLAG;
+        _A = tmp & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0B74] ROL $26 */
+    {
+        uint16 addr = 0x0026;
+        uint8 value = RdMem(addr);
+        uint8 carry = value >> 7;
+        value = ((value << 1) | (_P & C_FLAG)) & 0xFF;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0B76] ROR */
+    {
+        uint8 carry = _A & 0x01;
+        _A >>= 1;
+        _A |= (_P & C_FLAG) << 7;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        X_ZN(_A);
+    }
+
+    /* [0x0B77] ROR */
+    {
+        uint8 carry = _A & 0x01;
+        _A >>= 1;
+        _A |= (_P & C_FLAG) << 7;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        X_ZN(_A);
+    }
+
+    /* [0x0B78] ??? */
+    /* Unknown opcode 0x4B - no translation */
+
+    /* [0x0B79] JMP $4E4D */
+    _PC = 0x4E4D;
+    return;
+
+    /* [0x0B7C] EOR $4D4F */
+    _A ^= RdMem(0x4D4F);
+    X_ZN(_A);
+
+    /* [0x0B7F] ??? */
+    /* Unknown opcode 0x4F - no translation */
+
+    /* [0x0B80] EOR $504E */
+    _A ^= RdMem(0x504E);
+    X_ZN(_A);
+
+    /* [0x0B83] EOR ($6B),Y */
+    {
+        uint16 addr = RdMem(0x006B) | (RdMem(0x006B + 1) << 8);
+        addr += _Y;
+        _A ^= RdMem(addr);
+        X_ZN(_A);
+    }
+
+    /* [0x0B85] BVS $0BB3 */
+    if(_P & V_FLAG)
+    {
+        _PC = 0x0BB3;
+        return;
+    }
+
+    /* [0x0B87] AND $716C */
+    _A &= RdMem(0x716C);
+    X_ZN(_A);
+
+    /* [0x0B8A] ADC $6E72 */
+    {
+        uint8 value = RdMem(0x6E72);
+        uint16 t = _A + value + (_P & C_FLAG);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+        if(t & 0x100) _P |= C_FLAG;
+        if(~(_A ^ value) & (_A ^ t) & 0x80) _P |= V_FLAG;
+        _A = t & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0B8D] ??? */
+    /* Unknown opcode 0x73 - no translation */
+
+    /* [0x0B8E] ??? */
+    /* Unknown opcode 0x6F - no translation */
+
+    /* [0x0B8F] ??? */
+    /* Unknown opcode 0x74 - no translation */
+
+    /* [0x0B90] STX $8A */
+    WrMem(0x008A, _X);
+
+    /* [0x0B92] ??? */
+    /* Unknown opcode 0x87 - no translation */
+
+    /* [0x0B93] ??? */
+    /* Unknown opcode 0x8B - no translation */
+
+    /* [0x0B94] DEY */
+    _Y--; X_ZN(_Y);
+
+    /* [0x0B95] STY $8C88 */
+    WrMem(0x8C88, _Y);
+
+    /* [0x0B98] ??? */
+    /* Unknown opcode 0x89 - no translation */
+
+    /* [0x0B99] STA $6969 */
+    WrMem(0x6969, _A);
+
+    /* [0x0B9C] STX $8F91 */
+    WrMem(0x8F91, _X);
+
+    /* [0x0B9F] ??? */
+    /* Unknown opcode 0x92 - no translation */
+
+    /* [0x0BA0] ROL $93 */
+    {
+        uint16 addr = 0x0093;
+        uint8 value = RdMem(addr);
+        uint8 carry = value >> 7;
+        value = ((value << 1) | (_P & C_FLAG)) & 0xFF;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0BA2] ROL $93 */
+    {
+        uint16 addr = 0x0093;
+        uint8 value = RdMem(addr);
+        uint8 carry = value >> 7;
+        value = ((value << 1) | (_P & C_FLAG)) & 0xFF;
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+        if(carry) _P |= C_FLAG;
+        WrMem(addr, value);
+        X_ZN(value);
+    }
+
+    /* [0x0BA4] BCC $0B3A */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x0B3A;
+        return;
+    }
+
+    /* [0x0BA6] ADC #$69 */
+    {
+        uint16 tmp = _A + 0x69 + (_P & C_FLAG);
+        _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+        if(tmp & 0x100) _P |= C_FLAG;
+        if(~(_A ^ 0x69) & (_A ^ tmp) & 0x80) _P |= V_FLAG;
+        _A = tmp & 0xFF;
+        X_ZN(_A);
+    }
+
+    /* [0x0BA8] LDY $E9 */
+    _Y = RdMem(0x00E9); X_ZN(_Y);
+
+    /* [0x0BAA] NOP */
+    /* No operation */
+}

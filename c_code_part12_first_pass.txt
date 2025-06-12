@@ -1,0 +1,148 @@
+/* Translation of assembly.txt starting at offset 0x0B18 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part12(void)
+{
+    /* [0x0B18] BPL $0AC6 */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x0AC6;
+        return;
+    }
+
+    /* [0x0B1A] ??? */
+    /* Unknown opcode 0x64 - no translation */
+
+    /* [0x0B1B] STY $8B8B */
+    WrMem(0x8B8B, _Y);
+
+    /* [0x0B1E] STY $248C */
+    WrMem(0x248C, _Y);
+
+    /* [0x0B21] BIT $24 */
+    { uint8 value = RdMem(0x0024); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B23] BIT $27 */
+    { uint8 value = RdMem(0x0027); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B25] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x0B26] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x0B27] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x0B28] BIT $24 */
+    { uint8 value = RdMem(0x0024); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B2A] BIT $35 */
+    { uint8 value = RdMem(0x0035); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B2C] ROL $25,X */
+    { uint16 addr = 0x0025 + _X; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B2E] ??? */
+    /* Unknown opcode 0x37 - no translation */
+
+    /* [0x0B2F] AND $24 */
+    _A &= RdMem(0x0024); X_ZN(_A);
+
+    /* [0x0B31] SEC */
+    _P |= C_FLAG;
+
+    /* [0x0B32] BIT $24 */
+    { uint8 value = RdMem(0x0024); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B34] BIT $30 */
+    { uint8 value = RdMem(0x0030); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B36] BMI $0B5E */
+    if(_P & N_FLAG)
+    {
+        _PC = 0x0B5E;
+        return;
+    }
+
+    /* [0x0B38] ROL $26 */
+    { uint16 addr = 0x0026; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B3A] ??? */
+    /* Unknown opcode 0x34 - no translation */
+
+    /* [0x0B3B] ROL $24 */
+    { uint16 addr = 0x0024; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B3D] AND ($24),Y */
+    { uint16 addr = RdMem(0x0024) | (RdMem(0x0025) << 8); addr += _Y; _A &= RdMem(addr); X_ZN(_A); }
+
+    /* [0x0B3F] ??? */
+    /* Unknown opcode 0x32 - no translation */
+
+    /* [0x0B40] ??? */
+    /* Unknown opcode 0x33 - no translation */
+
+    /* [0x0B41] ROL $24 */
+    { uint16 addr = 0x0024; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B43] ??? */
+    /* Unknown opcode 0x33 - no translation */
+
+    /* [0x0B44] ??? */
+    /* Unknown opcode 0x34 - no translation */
+
+    /* [0x0B45] ROL $26 */
+    { uint16 addr = 0x0026; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B47] ROL $26 */
+    { uint16 addr = 0x0026; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B49] ROL $26 */
+    { uint16 addr = 0x0026; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B4B] ROL $24 */
+    { uint16 addr = 0x0024; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0B4D] CPY #$24 */
+    { uint8 value = 0x24; uint32 t = _Y - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0B4F] CPY #$24 */
+    { uint8 value = 0x24; uint32 t = _Y - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0B51] ??? */
+    /* Unknown opcode 0x7F - no translation */
+
+    /* [0x0B52] ??? */
+    /* Unknown opcode 0x7F - no translation */
+
+    /* [0x0B53] BIT $B8 */
+    { uint8 value = RdMem(0x00B8); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0B55] TSX */
+    _X = _S; X_ZN(_X);
+
+    /* [0x0B56] LDA $B8BB,Y */
+    _A = RdMem(0xB8BB + _Y); X_ZN(_A);
+
+    /* [0x0B59] LDY $BDB9,X */
+    _Y = RdMem(0xBDB9 + _X); X_ZN(_Y);
+
+    /* [0x0B5C] TSX */
+    _X = _S; X_ZN(_X);
+
+    /* [0x0B5D] LDY $BDBB,X */
+    _Y = RdMem(0xBDBB + _X); X_ZN(_Y);
+
+    /* [0x0B60] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+}
+

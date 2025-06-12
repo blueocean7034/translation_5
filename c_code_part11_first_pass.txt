@@ -1,0 +1,646 @@
+/* Translation of assembly.txt starting at offset 0x09D3 */
+
+#include "fceux-2.6.6/src/x6502.h"
+#include "fceux-2.6.6/src/x6502.cpp"
+
+void translated_code_part11(void)
+{
+    /* [0x09D3] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x09D4] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x09D5] ??? */
+    /* Unknown opcode 0x27 - no translation */
+
+    /* [0x09D6] ??? */
+    /* Unknown opcode 0x17 - no translation */
+
+    /* [0x09D7] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x09D8] ??? */
+    /* Unknown opcode 0x17 - no translation */
+
+    /* [0x09D9] ??? */
+    /* Unknown opcode 0x3F - no translation */
+
+    /* [0x09DA] ??? */
+    /* Unknown opcode 0x0C - no translation */
+
+    /* [0x09DB] ??? */
+    /* Unknown opcode 0x04 - no translation */
+
+    /* [0x09DC] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x09DD] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x09DE] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x09DF] ??? */
+    /* Unknown opcode 0xFF - no translation */
+
+    /* [0x09E0] BRK */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    PUSH((_P | B_FLAG) & 0xFF);
+    _P |= I_FLAG;
+    _PC = RdMem(0xFFFE) | (RdMem(0xFFFF) << 8);
+    return;
+
+    /* [0x09E1] ??? */
+    /* Unknown opcode 0x0F - no translation */
+
+    /* [0x09E2] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x09E3] ??? */
+    /* Unknown opcode 0x12 - no translation */
+
+    /* [0x09E4] ??? */
+    /* Unknown opcode 0x0F - no translation */
+
+    /* [0x09E5] ??? */
+    /* Unknown opcode 0x0F - no translation */
+
+    /* [0x09E6] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x09E7] ??? */
+    /* Unknown opcode 0x17 - no translation */
+
+    /* [0x09E8] ??? */
+    /* Unknown opcode 0x0F - no translation */
+
+    /* [0x09E9] ??? */
+    /* Unknown opcode 0x0F - no translation */
+
+    /* [0x09EA] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x09EB] ??? */
+    /* Unknown opcode 0x17 - no translation */
+
+    /* [0x09EC] ??? */
+    /* Unknown opcode 0x1C - no translation */
+
+    /* [0x09ED] ??? */
+    /* Unknown opcode 0x0F - no translation */
+
+    /* [0x09EE] ??? */
+    /* Unknown opcode 0x07 - no translation */
+
+    /* [0x09EF] ??? */
+    /* Unknown opcode 0x17 - no translation */
+
+    /* [0x09F0] BRK */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    PUSH((_P | B_FLAG) & 0xFF);
+    _P |= I_FLAG;
+    _PC = RdMem(0xFFFE) | (RdMem(0xFFFF) << 8);
+    return;
+
+    /* [0x09F1] LDA $09 */
+    _A = RdMem(0x0009); X_ZN(_A);
+
+    /* [0x09F3] AND #$07 */
+    _A &= 0x07; X_ZN(_A);
+
+    /* [0x09F5] BNE $0A48 */
+    if(_A != 0)
+    {
+        _PC = 0x0A48;
+        return;
+    }
+
+    /* [0x09F7] LDX $0300 */
+    _X = RdMem(0x0300); X_ZN(_X);
+
+    /* [0x09FA] CPX #$31 */
+    { uint8 value = 0x31; uint32 t = _X - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x09FC] BCS $0A48 */
+    if(_P & C_FLAG)
+    {
+        _PC = 0x0A48;
+        return;
+    }
+
+    /* [0x09FE] TAY */
+    _Y = _A; X_ZN(_Y);
+
+    /* [0x09FF] LDA $89C9,Y */
+    _A = RdMem(0x89C9 + _Y); X_ZN(_A);
+
+    /* [0x0A02] STA $0301,X */
+    WrMem(0x0301 + _X, _A);
+
+    /* [0x0A05] INX */
+    _X = (_X + 1) & 0xFF; X_ZN(_X);
+
+    /* [0x0A06] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0A07] CPY #$08 */
+    { uint8 value = 0x08; uint32 t = _Y - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A09] BCC $09FF */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x09FF;
+        return;
+    }
+
+    /* [0x0A0B] LDX $0300 */
+    _X = RdMem(0x0300); X_ZN(_X);
+
+    /* [0x0A0E] LDA #$03 */
+    _A = 0x03; X_ZN(_A);
+
+    /* [0x0A10] STA $00 */
+    WrMem(0x0000, _A);
+
+    /* [0x0A12] LDA $074E */
+    _A = RdMem(0x074E); X_ZN(_A);
+
+    /* [0x0A15] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0A16] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0A17] TAY */
+    _Y = _A; X_ZN(_Y);
+
+    /* [0x0A18] LDA $89D1,Y */
+    _A = RdMem(0x89D1 + _Y); X_ZN(_A);
+
+    /* [0x0A1B] STA $0304,X */
+    WrMem(0x0304 + _X, _A);
+
+    /* [0x0A1E] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0A1F] INX */
+    _X = (_X + 1) & 0xFF; X_ZN(_X);
+
+    /* [0x0A20] DEC $00 */
+    { uint16 addr = 0x0000; uint8 value = RdMem(addr); value = (value - 1) & 0xFF; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0A22] BPL $0A18 */
+    if(!(_P & N_FLAG))
+    {
+        _PC = 0x0A18;
+        return;
+    }
+
+    /* [0x0A24] LDX $0300 */
+    _X = RdMem(0x0300); X_ZN(_X);
+
+    /* [0x0A27] LDY $06D4 */
+    _Y = RdMem(0x06D4); X_ZN(_Y);
+
+    /* [0x0A2A] LDA $89C3,Y */
+    _A = RdMem(0x89C3 + _Y); X_ZN(_A);
+
+    /* [0x0A2D] STA $0305,X */
+    WrMem(0x0305 + _X, _A);
+
+    /* [0x0A30] LDA $0300 */
+    _A = RdMem(0x0300); X_ZN(_A);
+
+    /* [0x0A33] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0A34] ADC #$07 */
+    { uint16 tmp = _A + 0x07 + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ 0x07) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0A36] STA $0300 */
+    WrMem(0x0300, _A);
+
+    /* [0x0A39] INC $06D4 */
+    { uint16 addr = 0x06D4; uint8 value = (RdMem(addr) + 1) & 0xFF; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0A3C] LDA $06D4 */
+    _A = RdMem(0x06D4); X_ZN(_A);
+
+    /* [0x0A3F] CMP #$06 */
+    { uint8 value = 0x06; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A41] BCC $0A48 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x0A48;
+        return;
+    }
+
+    /* [0x0A43] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0A45] STA $06D4 */
+    WrMem(0x06D4, _A);
+
+    /* [0x0A48] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+    /* [0x0A49] EOR $45 */
+    _A ^= RdMem(0x0045); X_ZN(_A);
+
+    /* [0x0A4B] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x0A4C] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x0A4D] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x0A4E] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x0A4F] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x0A50] ??? */
+    /* Unknown opcode 0x47 - no translation */
+
+    /* [0x0A51] ??? */
+    /* Unknown opcode 0x57 - no translation */
+
+    /* [0x0A52] CLI */
+    _P &= ~I_FLAG;
+
+    /* [0x0A53] EOR $245A,Y */
+    _A ^= RdMem(0x245A + _Y); X_ZN(_A);
+
+    /* [0x0A56] BIT $24 */
+    { uint8 value = RdMem(0x0024); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0A58] BIT $26 */
+    { uint8 value = RdMem(0x0026); uint8 result = _A & value; _P &= ~(Z_FLAG | N_FLAG | V_FLAG); if(result == 0) _P |= Z_FLAG; _P |= value & (N_FLAG | V_FLAG); }
+
+    /* [0x0A5A] ROL $26 */
+    { uint16 addr = 0x0026; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0A5C] ROL $A0 */
+    { uint16 addr = 0x00A0; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0A5E] EOR ($A9,X) */
+    {
+        uint16 addr = RdMem((0xA9 + _X) & 0xFF) | (RdMem((0xA9 + _X + 1) & 0xFF) << 8);
+        _A ^= RdMem(addr); X_ZN(_A);
+    }
+
+    /* [0x0A60] ??? */
+    /* Unknown opcode 0x03 - no translation */
+
+    /* [0x0A61] LDX $074E */
+    _X = RdMem(0x074E); X_ZN(_X);
+
+    /* [0x0A64] BNE $0A68 */
+    if(_X != 0)
+    {
+        _PC = 0x0A68;
+        return;
+    }
+
+    /* [0x0A66] LDA #$04 */
+    _A = 0x04; X_ZN(_A);
+
+    /* [0x0A68] JSR $8A97 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8A97;
+    return;
+
+    /* [0x0A6B] LDA #$06 */
+    _A = 0x06; X_ZN(_A);
+
+    /* [0x0A6D] STA $0773 */
+    WrMem(0x0773, _A);
+
+    /* [0x0A70] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+    /* [0x0A71] JSR $8A6D */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8A6D;
+    return;
+
+    /* [0x0A74] INC $03F0 */
+    { uint16 addr = 0x03F0; uint8 value = (RdMem(addr) + 1) & 0xFF; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0A77] DEC $03EC,X */
+    { uint16 addr = 0x03EC + _X; uint8 value = (RdMem(addr) - 1) & 0xFF; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0A7A] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+
+    /* [0x0A7B] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0A7D] LDY #$03 */
+    _Y = 0x03; X_ZN(_Y);
+
+    /* [0x0A7F] CMP #$00 */
+    { uint8 value = 0x00; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A81] BEQ $0A97 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0A97;
+        return;
+    }
+
+    /* [0x0A83] LDY #$00 */
+    _Y = 0x00; X_ZN(_Y);
+
+    /* [0x0A85] CMP #$58 */
+    { uint8 value = 0x58; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A87] BEQ $0A97 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0A97;
+        return;
+    }
+
+    /* [0x0A89] CMP #$51 */
+    { uint8 value = 0x51; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A8B] BEQ $0A97 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0A97;
+        return;
+    }
+
+    /* [0x0A8D] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0A8E] CMP #$5D */
+    { uint8 value = 0x5D; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A90] BEQ $0A97 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0A97;
+        return;
+    }
+
+    /* [0x0A92] CMP #$52 */
+    { uint8 value = 0x52; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0A94] BEQ $0A97 */
+    if(_P & Z_FLAG)
+    {
+        _PC = 0x0A97;
+        return;
+    }
+
+    /* [0x0A96] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0A97] TYA */
+    _A = _Y; X_ZN(_A);
+
+    /* [0x0A98] LDY $0300 */
+    _Y = RdMem(0x0300); X_ZN(_Y);
+
+    /* [0x0A9B] INY */
+    _Y = (_Y + 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0A9C] JSR $8A97 */
+    PUSH((_PC >> 8) & 0xFF);
+    PUSH(_PC & 0xFF);
+    _PC = 0x8A97;
+    return;
+
+    /* [0x0A9F] DEY */
+    _Y = (_Y - 1) & 0xFF; X_ZN(_Y);
+
+    /* [0x0AA0] TYA */
+    _A = _Y; X_ZN(_A);
+
+    /* [0x0AA1] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0AA2] ADC #$0A */
+    { uint16 tmp = _A + 0x0A + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ 0x0A) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0AA4] JMP $863F */
+    _PC = 0x863F; return;
+
+    /* [0x0AA7] STX $00 */
+    WrMem(0x0000, _X);
+
+    /* [0x0AA9] STY $01 */
+    WrMem(0x0001, _Y);
+
+    /* [0x0AAB] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0AAC] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0AAD] TAX */
+    _X = _A; X_ZN(_X);
+
+    /* [0x0AAE] LDY #$20 */
+    _Y = 0x20; X_ZN(_Y);
+
+    /* [0x0AB0] LDA $06 */
+    _A = RdMem(0x0006); X_ZN(_A);
+
+    /* [0x0AB2] CMP #$D0 */
+    { uint8 value = 0xD0; uint32 t = _A - value; X_ZN(t & 0xFF); _P &= ~C_FLAG; _P |= ((t >> 8) & C_FLAG) ^ C_FLAG; }
+
+    /* [0x0AB4] BCC $0AB8 */
+    if(!(_P & C_FLAG))
+    {
+        _PC = 0x0AB8;
+        return;
+    }
+
+    /* [0x0AB6] LDY #$24 */
+    _Y = 0x24; X_ZN(_Y);
+
+    /* [0x0AB8] STY $03 */
+    WrMem(0x0003, _Y);
+
+    /* [0x0ABA] AND #$0F */
+    _A &= 0x0F; X_ZN(_A);
+
+    /* [0x0ABC] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0ABD] STA $04 */
+    WrMem(0x0004, _A);
+
+    /* [0x0ABF] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0AC1] STA $05 */
+    WrMem(0x0005, _A);
+
+    /* [0x0AC3] LDA $02 */
+    _A = RdMem(0x0002); X_ZN(_A);
+
+    /* [0x0AC5] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0AC6] ADC #$20 */
+    { uint16 tmp = _A + 0x20 + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ 0x20) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0AC8] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0AC9] ROL $05 */
+    { uint16 addr = 0x0005; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0ACB] ASL */
+    _P &= ~(C_FLAG | Z_FLAG | N_FLAG);
+    _P |= (_A >> 7) & C_FLAG;
+    _A = (_A << 1) & 0xFF;
+    X_ZN(_A);
+
+    /* [0x0ACC] ROL $05 */
+    { uint16 addr = 0x0005; uint8 value = RdMem(addr); uint8 carry = value >> 7; value = ((value << 1) | (_P & C_FLAG)) & 0xFF; _P &= ~(C_FLAG | Z_FLAG | N_FLAG); if(carry) _P |= C_FLAG; WrMem(addr, value); X_ZN(value); }
+
+    /* [0x0ACE] ADC $04 */
+    { uint16 tmp = _A + RdMem(0x0004) + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ RdMem(0x0004)) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0AD0] STA $04 */
+    WrMem(0x0004, _A);
+
+    /* [0x0AD2] LDA $05 */
+    _A = RdMem(0x0005); X_ZN(_A);
+
+    /* [0x0AD4] ADC #$00 */
+    { uint16 tmp = _A + 0x00 + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ 0x00) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0AD6] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0AD7] ADC $03 */
+    { uint16 tmp = _A + RdMem(0x0003) + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ RdMem(0x0003)) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0AD9] STA $05 */
+    WrMem(0x0005, _A);
+
+    /* [0x0ADB] LDY $01 */
+    _Y = RdMem(0x0001); X_ZN(_Y);
+
+    /* [0x0ADD] LDA $8A39,X */
+    _A = RdMem(0x8A39 + _X); X_ZN(_A);
+
+    /* [0x0AE0] STA $0303,Y */
+    WrMem(0x0303 + _Y, _A);
+
+    /* [0x0AE3] LDA $8A3A,X */
+    _A = RdMem(0x8A3A + _X); X_ZN(_A);
+
+    /* [0x0AE6] STA $0304,Y */
+    WrMem(0x0304 + _Y, _A);
+
+    /* [0x0AE9] LDA $8A3B,X */
+    _A = RdMem(0x8A3B + _X); X_ZN(_A);
+
+    /* [0x0AEC] STA $0308,Y */
+    WrMem(0x0308 + _Y, _A);
+
+    /* [0x0AEF] LDA $8A3C,X */
+    _A = RdMem(0x8A3C + _X); X_ZN(_A);
+
+    /* [0x0AF2] STA $0309,Y */
+    WrMem(0x0309 + _Y, _A);
+
+    /* [0x0AF5] LDA $04 */
+    _A = RdMem(0x0004); X_ZN(_A);
+
+    /* [0x0AF7] STA $0301,Y */
+    WrMem(0x0301 + _Y, _A);
+
+    /* [0x0AFA] CLC */
+    _P &= ~C_FLAG;
+
+    /* [0x0AFB] ADC #$20 */
+    { uint16 tmp = _A + 0x20 + (_P & C_FLAG); _P &= ~(C_FLAG | Z_FLAG | N_FLAG | V_FLAG); if(tmp > 0xFF) _P |= C_FLAG; _P |= (((~(_A ^ 0x20) & (_A ^ tmp)) & 0x80) != 0) << 6; _A = tmp & 0xFF; X_ZN(_A); }
+
+    /* [0x0AFD] STA $0306,Y */
+    WrMem(0x0306 + _Y, _A);
+
+    /* [0x0B00] LDA $05 */
+    _A = RdMem(0x0005); X_ZN(_A);
+
+    /* [0x0B02] STA $0300,Y */
+    WrMem(0x0300 + _Y, _A);
+
+    /* [0x0B05] STA $0305,Y */
+    WrMem(0x0305 + _Y, _A);
+
+    /* [0x0B08] LDA #$02 */
+    _A = 0x02; X_ZN(_A);
+
+    /* [0x0B0A] STA $0302,Y */
+    WrMem(0x0302 + _Y, _A);
+
+    /* [0x0B0D] STA $0307,Y */
+    WrMem(0x0307 + _Y, _A);
+
+    /* [0x0B10] LDA #$00 */
+    _A = 0x00; X_ZN(_A);
+
+    /* [0x0B12] STA $030A,Y */
+    WrMem(0x030A + _Y, _A);
+
+    /* [0x0B15] LDX $00 */
+    _X = RdMem(0x0000); X_ZN(_X);
+
+    /* [0x0B17] RTS */
+    {
+        uint8 pcl = POP();
+        uint8 pch = POP();
+        _PC = ((pch << 8) | pcl) + 1;
+        return;
+    }
+}
